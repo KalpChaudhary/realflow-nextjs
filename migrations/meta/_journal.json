@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1702324928109,
+      "tag": "0000_stormy_bushwacker",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1702325277234,
+      "tag": "0001_far_cargill",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702325386419,
+      "tag": "0002_chilly_smiling_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1702326985488,
+      "tag": "0003_condemned_squirrel_girl",
+      "breakpoints": true
+    }
+  ]
+}
