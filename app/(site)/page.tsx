@@ -35,8 +35,8 @@ export default function HomePage() {
     <>
       <section className="overflow-hidden
     px-4
+    pt-24
     sm:px-6
-    mt-10
     sm:flex
     sm:flex-col
     gap-4
@@ -326,7 +326,7 @@ export default function HomePage() {
             <CustomCard
               key={card.planType}
               className={clsx(
-                'w-[300px] rounded-2xl dark:bg-black/40 background-blur-3xl relative',
+                ' rounded-2xl dark:bg-black/40 background-blur-3xl relative',
                 {
                   'border-brand-primaryPurple/90':
                     card.planType === PRICING_PLANS.proplan,

@@ -22,7 +22,8 @@ const migrateDb = async () => {
   } catch (err) {
     console.error("Migration Error👺👺👺 :", err);
 
-    process.exit(1);
+    // process.exit(1);
+    throw err;
   }
 };
 

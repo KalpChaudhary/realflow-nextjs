@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 
 import db from '@/lib/supabase/db'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-
-const inter = Inter({ subsets: ['latin'] })
+import { UserNav } from '@/components/user-nav'
+import { MainNav } from '@/components/main-nav'
+import { Toaster } from "@/components/ui/toaster"
+const inter = DM_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,7 +26,8 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+
+      <body className={`${inter.className} relative`}>
 
         <ThemeProvider
           attribute="class"
@@ -32,7 +35,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <MainNav />
           {children}
+          <Toaster />
           <TailwindIndicator />
         </ThemeProvider>
       </body>

@@ -10,7 +10,6 @@ import {
   integer,
   boolean,
 } from "drizzle-orm/pg-core";
-import { string } from "prop-types";
 
 export const workspace = pgTable("workspace", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),

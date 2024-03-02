@@ -4,6 +4,7 @@ import { FunctionComponent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { actionLoginUser } from "@/lib/server-action/auth-actions";
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -19,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { UserAuthForm } from "@/components/user-auth-form";
 import Link from "next/link";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -49,24 +50,28 @@ const Login: FunctionComponent<LoginProps> = () => {
     return (
 
         <>
-            <div className="container relative  h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+
+            <div className="container relative  h-full flex-col items-center justify-center mt-20 md:mt-0 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
 
                 <div className="relative lg:block hidden h-full flex-col bg-muted">
                     <Image
                         src="/login-side-img.jpg"
                         alt="Hero"
-                        layout="fill"
+                        sizes="100vw"
+                        style={{
+                            objectFit: 'cover',
+                        }}
+                        fill
                         objectFit="cover"
                         quality={100}
-                        priority
                     />
 
                 </div>
                 <div className="lg:p-8">
-                    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                    <div className="mx-auto flex w-full flex-col justify-center space-y-6 mt-16 md:mt-0 sm:w-[350px]">
                         <div className="flex flex-col space-y-2 text-center">
                             <h1 className="text-2xl font-semibold tracking-tight">
-                                Create an account
+                                Login to RealFlow
                             </h1>
                             <p className="text-sm text-muted-foreground">
                                 Enter your email below to create your account

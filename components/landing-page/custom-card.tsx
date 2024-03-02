@@ -18,7 +18,7 @@ const CustomCard: React.FC<CustomCardProps> = ({
 }) => {
     return (
         <Card
-            className={cn('w-[380px]', className)}
+            className={cn('', className)}
             {...props}
         >
             <CardHeader>{cardHeader}</CardHeader>
