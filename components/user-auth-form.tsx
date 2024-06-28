@@ -1,8 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-// import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -11,12 +9,13 @@ import { FormSchema } from "@/lib/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 import { actionLoginUser, signInWithGithub } from "@/lib/server-action/auth-actions"
-import { revalidatePath } from "next/cache"
 import { toast } from "@/components/ui/use-toast"
 import { usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
+    FormType?: 'login' | 'signup'
 }
 
 
@@ -25,13 +24,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
 
     const pathname = usePathname()
+    const router = useRouter()
+
+
 
     const form = useForm<z.infer<typeof FormSchema>>({
         mode: 'onChange',
         resolver: zodResolver(FormSchema),
         defaultValues: {
             email: '',
-            password: ''
+            password: '',
         }
     })
     const isLoading = form.formState.isSubmitting;
@@ -41,7 +43,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (formData) => {
 
-        console.log(formData)
         const { data, error } = await actionLoginUser(formData)
         if (error) {
             form.reset()
@@ -50,25 +51,35 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 description: "Invalid Credentials. Please try again.",
                 variant: "destructive",
             })
+            
         }
-        revalidatePath('/dashboard')
+
+        router.push('/dashboard')
     }
 
-    // const registerGithub = async () => {
-    //     const { data, error } = await signInWithGithub()
-    //     if (error) {
-    //         return toast({
-    //             title: "Something went wrong.",
-    //             description: "Invalid Credentials. Please try again.",
-    //             variant: "destructive",
-    //         })
-    //     }
+
+    const onSubmitUsingGithub = async () => {
+
+
+        const { data, error } = await signInWithGithub();
+
+        if (error) {
+            return toast({
+                title: "Something went wrong.",
+                description: error.message,
+                variant: "destructive",
+            })
+        }
+
+
+        console.log("data:", data);
+        router.push('/dashboard')
+
+
+    }
 
 
 
-    //     console.log(data)
-    //     // revalidatePath('/dashboard')
-    // }
 
 
     return (
@@ -129,7 +140,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                             </span>
                         </div>
                     </div>
-                    <Button className="w-full" variant="outline" type="button" disabled={isLoading}>
+                    <Button className="w-full" variant="outline" type="button" disabled={isLoading} onClick={() => onSubmitUsingGithub()}>
                         {isLoading ? (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         ) : (

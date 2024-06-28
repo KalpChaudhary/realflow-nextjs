@@ -1,13 +1,22 @@
 import Link from "next/link"
-
 import { cn } from "@/lib/utils"
 import { UserNav } from "./user-nav"
 import Image from "next/image"
 
-export function MainNav({
-    className,
-    ...props
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+
+export async function MainNav({
+    className, ...props
 }: React.HTMLAttributes<HTMLElement>) {
+
+
+    const supabase = createServerComponentClient({ cookies })
+
+    const { data: { user } } = await supabase.auth.getUser()
+
+
+
 
 
     return (
@@ -32,7 +41,7 @@ export function MainNav({
             >
                 <Link
                     href="/"
-                    className="text-sm font-medium transition-colors hover:text-primary"
+                    className={`text-sm font-medium transition-colors hover:text-primary`}
                 >
                     Home
                 </Link>
@@ -54,9 +63,32 @@ export function MainNav({
                 >
                     Settings
                 </Link>
+                {
+                    user ? (
+                        <Link
+                            href="/dashboard"
+                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            Dashboard
+                        </Link>
+                    ) : null
+                }
             </div>
-            <UserNav />
+            {
+                user ? (
+                    <UserNav />
+                ) : (
+                    <Link
+                        href="/login"
+                        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                    >
+                        Login
+                    </Link>
+                )
+            }
+            {/* <UserNav /> */}
 
         </nav>
     )
 }
+

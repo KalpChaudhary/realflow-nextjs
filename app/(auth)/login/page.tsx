@@ -1,10 +1,10 @@
 "use client"
 
-import { FunctionComponent } from "react";
+import { FunctionComponent, use } from "react";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { actionLoginUser } from "@/lib/server-action/auth-actions";
+import { actionLoginUser, signInWithGithub } from "@/lib/server-action/auth-actions";
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -31,20 +31,13 @@ const formSchema = z.object({
     }),
 })
 
+
 interface LoginProps {
     username: string
     password: string
 }
 
 const Login: FunctionComponent<LoginProps> = () => {
-
-    const form = useForm<LoginProps>({
-        resolver: zodResolver(formSchema),
-    })
-
-    const onSubmit = (values: LoginProps) => {
-        console.log(values)
-    }
 
 
     return (
@@ -67,12 +60,30 @@ const Login: FunctionComponent<LoginProps> = () => {
                     />
 
                 </div>
-                <div className="lg:p-8">
+                <div className="">
                     <div className="mx-auto flex w-full flex-col justify-center space-y-6 mt-16 md:mt-0 sm:w-[350px]">
                         <div className="flex flex-col space-y-2 text-center">
-                            <h1 className="text-2xl font-semibold tracking-tight">
-                                Login to RealFlow
-                            </h1>
+                            <Link
+                                href="/"
+                                className="
+              w-full
+              flex
+              justify-left
+              items-center"
+                            >
+                                <Image
+                                    src="/cypresslogo.svg"
+                                    alt="cypress Logo"
+                                    width={50}
+                                    height={50}
+                                />
+                                <span
+                                    className="font-semibold
+              dark:text-white text-4xl first-letter:ml-2"
+                                >
+                                    realflow.
+                                </span>
+                            </Link>
                             <p className="text-sm text-muted-foreground">
                                 Enter your email below to create your account
                             </p>

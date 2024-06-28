@@ -55,7 +55,7 @@ export const subscriptionStatus = pgEnum("subscription_status", [
   "trialing",
 ]);
 
-export const workspace = pgTable("workspace", {
+export const workspaces = pgTable("workspaces", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }),
   workspaceOwner: uuid("workspace_owner").notNull(),
@@ -76,7 +76,7 @@ export const folders = pgTable("folders", {
   data: text("data"),
   inTrash: text("in_trash"),
   bannerUrl: text("banner_url"),
-  workspaceId: uuid("workspace_id").references(() => workspace.id, {
+  workspaceId: uuid("workspace_id").references(() => workspaces.id, {
     onDelete: "cascade",
   }),
 });
@@ -90,7 +90,7 @@ export const files = pgTable("files", {
   data: text("data"),
   inTrash: text("in_trash"),
   bannerUrl: text("banner_url"),
-  workspaceId: uuid("workspace_id").references(() => workspace.id, {
+  workspaceId: uuid("workspace_id").references(() => workspaces.id, {
     onDelete: "cascade",
   }),
   foldersId: uuid("folders_id").references(() => folders.id, {
